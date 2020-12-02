@@ -1,0 +1,20 @@
+#!/bin/awk -f
+BEGIN {
+    valid=0
+}
+{
+    # Process the inputs
+    char=substr($2, 0, 1);
+    min=substr($1, 0, index($1,"-")-1) + 0
+    max=substr($1, index($1,"-")+1, length($1)) + 0
+
+    # Cheat and use the regex engine, that returns the number of replacements
+    occurences=gsub(char, "+", $3);
+
+    if (occurences >= min && occurences <= max) {
+        valid++
+    }
+}
+END {
+    print "Valid passwords: ", valid
+}
